@@ -9,9 +9,18 @@ public class Gantt extends PApplet
 {	
 	ArrayList<Task> tasks = new ArrayList<Task>();
 	
+	float chartBorder;
+    float tasksList;
+
+    float w;
+    float h;
+	
 	public void settings()
 	{
 		size(800, 600);
+		
+		tasksList = width * 0.03f;
+		chartBorder = width * 0.15f;
 	}
 
 	public void loadTasks()
@@ -32,6 +41,26 @@ public class Gantt extends PApplet
         }
 	}
 	
+	public void displayTasks()
+	{
+		int gap=50;
+		int ganttLength=30;
+		
+		for(Task t:tasks)
+		{
+			text(t.getTask(),tasksList,gap);
+			rect(t.getStart()+chartBorder , gap, (t.getEnd()-t.getStart()), h);
+			gap+=50;
+		}
+		
+		for(int i = 1; i < ganttLength+1; i++)
+		{
+			text(i, map(i, 1, ganttLength+1, chartBorder, width), 10);
+			stroke(255);
+			line(map(i, 1, ganttLength+1, chartBorder, width), 15, map(i, 1, ganttLength+1, chartBorder, width), height-30);
+		}
+	}
+	
 	public void mousePressed()
 	{
 		println("Mouse pressed");	
@@ -42,16 +71,16 @@ public class Gantt extends PApplet
 		println("Mouse dragged");
 	}
 
-	
-	
 	public void setup() 
 	{
 		loadTasks();
         printTasks();
+		colorMode(HSB);
 	}
 	
 	public void draw()
-	{			
+	{		
 		background(0);
+		displayTasks();
 	}
 }

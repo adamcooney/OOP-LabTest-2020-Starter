@@ -30,7 +30,8 @@ public class Task {
         this.task = task;
     }
 
-    public int getStart() {
+    public int getStart() 
+	{
         return start;
     }
 
