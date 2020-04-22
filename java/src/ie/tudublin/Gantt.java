@@ -44,20 +44,20 @@ public class Gantt extends PApplet
 	public void displayTasks()
 	{
 		int gap=50;
-		int ganttLength=30;
+		int chartLength=30;
 		
 		for(Task t:tasks)
 		{
 			text(t.getTask(),tasksList,gap);
-			rect(t.getStart()+chartBorder , gap, (t.getEnd()-t.getStart()), h);
+			rect(map(t.getStart(),1,chartLength+1,chartBorder,width), gap-10, map((t.getEnd()-t.getStart()),1, chartLength, chartLength,width), h+30);
 			gap+=50;
 		}
 		
-		for(int i = 1; i < ganttLength+1; i++)
+		for(int i = 1; i < chartLength+1; i++)
 		{
-			text(i, map(i, 1, ganttLength+1, chartBorder, width), 10);
+			text(i, map(i, 1, chartLength+1, chartBorder, width), 10);
 			stroke(255);
-			line(map(i, 1, ganttLength+1, chartBorder, width), 15, map(i, 1, ganttLength+1, chartBorder, width), height-30);
+			line(map(i, 1, chartLength+1, chartBorder, width), 15, map(i, 1, chartLength+1, chartBorder, width), height-30);
 		}
 	}
 	
