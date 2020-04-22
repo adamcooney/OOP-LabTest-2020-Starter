@@ -12,7 +12,7 @@ public class Gantt extends PApplet
 	float chartBorder;
     float tasksList;
 
-    float w;
+	float w;
     float h;
 	
 	public void settings()
@@ -21,6 +21,7 @@ public class Gantt extends PApplet
 		
 		tasksList = width * 0.03f;
 		chartBorder = width * 0.15f;
+		h = 30;
 	}
 
 	public void loadTasks()
@@ -43,34 +44,42 @@ public class Gantt extends PApplet
 	
 	public void displayTasks()
 	{
-		int gap=50;
-		int chartLength=30;
-		
-		for(Task t:tasks)
-		{
-			text(t.getTask(),tasksList,gap);
-			rect(map(t.getStart(),1,chartLength+1,chartBorder,width), gap-10, map((t.getEnd()-t.getStart()),1, chartLength, chartLength,width), h+30);
-			gap+=50;
-		}
+		int gap = 50;
+		int chartLength = 30;
+		int col = 0;
 		
 		for(int i = 1; i < chartLength+1; i++)
 		{
-			text(i, map(i, 1, chartLength+1, chartBorder, width), 10);
+			fill(255);
+			text(i, map(i, 1, chartLength+1, chartBorder, width-15), 10);
 			stroke(255);
-			line(map(i, 1, chartLength+1, chartBorder, width), 15, map(i, 1, chartLength+1, chartBorder, width), height-30);
+			line(map(i, 1, chartLength+1, chartBorder, width-15), 15, map(i, 1, chartLength+1, chartBorder, width-15), height-30);
+		}
+		
+		for(Task t:tasks)
+		{
+			fill(255);
+			text(t.getTask(), tasksList, gap);
+			fill(map(col, 0, tasks.size(), 0, 255), 255, 255);
+			noStroke();
+			rect(map(t.getStart(), 1, chartLength+1, chartBorder, width-15), gap-15, map((t.getEnd()-t.getStart()), 0, chartLength, 0, width-chartBorder), h);
+			gap+=50;
+			col++;
 		}
 	}
 	
 	public void mousePressed()
 	{
-		println("Mouse pressed");	
+		println("Mouse pressed");
+		
 	}
 
 	public void mouseDragged()
 	{
-		println("Mouse dragged");
-	}
-
+		println("Mouse dragged"); 
+		
+    }
+    
 	public void setup() 
 	{
 		loadTasks();
